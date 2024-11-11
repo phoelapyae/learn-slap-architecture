@@ -1,0 +1,14 @@
+{
+  "name": "learn-slap",
+  "version": "1.0.0",
+  "description": "Learning about express.js and SLAP architecture",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zin Myo Maung",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
