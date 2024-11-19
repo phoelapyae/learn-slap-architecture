@@ -1,7 +1,7 @@
 require("dotenv").config();
 require("./src/databases/db");
-// require("./src/models/series-model");
-// require("./src/models/user-model");
+require("./src/models/series-model");
+require("./src/models/user-model");
 
 const express = require("express");
 const bodyParser = require("body-parser");
