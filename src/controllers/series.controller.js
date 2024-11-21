@@ -127,6 +127,18 @@ const _addSeries = function (newSeries) {
     return seriesService.addSeries(newSeries);
 }
 
+const _deleteOneSeries = function (seriesID) {
+    return seriesService.deleteSeriesById(seriesID);
+}
+
+const _findAndUpdate = function (seriesID, series) {
+    return seriesService.findSeriesByIdAndUpdate(seriesID, series);
+}
+
+const _replaceSeriesById = function (seriesID, newSeries) {
+    return seriesService.findSeriesByIdAndReplace(seriesID, newSeries);
+}
+
 const findAll = function (req, res) {
     _getQueryData(req)
         .then((query) => _findSeries(query))
@@ -156,9 +168,34 @@ const add = function (req, res) {
         .catch((error) => _handleErrorResponse(res, error));
 }
 
+const deleteById = function (req, res) {
+    const seriesID = req.params.seriesID;
+    _deleteOneSeries(seriesID)
+        .then((series) => _validateIsExist(series))
+        .then((series) => _response(res, series))
+        .catch((error) => _handleErrorResponse(res, error));
+}
+
+const partialUpdate = function (req, res) {
+    const seriesID = req.params.seriesID;
+    _findAndUpdate(seriesID, req.body)
+        .then((series) => _response(res, series))
+        .catch((error) => _handleErrorResponse(res, error));
+}
+
+const fullUpdate = function (req, res) {
+    const seriesID = req.params.seriesID;
+    _replaceSeriesById(seriesID, req.body)
+        .then((series) => _response(res, series))
+        .then((error) => _handleErrorResponse(res, error));
+}
+
 module.exports = {
     findAll,
     getAllPages,
     findById,
-    add
+    add,
+    deleteById,
+    partialUpdate,
+    fullUpdate
 }

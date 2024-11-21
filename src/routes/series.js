@@ -12,6 +12,9 @@ router.route("/pages")
     .get(seriesController.getAllPages);
 
 router.route("/:seriesID")
-    .get(seriesController.findById);
+    .get(seriesController.findById)
+    .delete(authController.auth, seriesController.deleteById)
+    .patch(authController.auth, seriesController.partialUpdate)
+    .put(authController.auth, seriesController.fullUpdate);
 
 module.exports = router;

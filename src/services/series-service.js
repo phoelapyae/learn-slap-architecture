@@ -35,10 +35,35 @@ const addSeries = function (newSeries) {
     return Series.create(newSeries);
 }
 
+const deleteSeriesById = function (seriesID) {
+    return Series.findByIdAndDelete(seriesID);
+}
+
+const findSeriesByIdAndUpdate = function (seriesID, series) {
+    return Series.findByIdAndUpdate(seriesID, series).exec();
+}
+
+const findSeriesByIdAndReplace = function (seriesID, newSeries) {
+    console.log("NewSeries ************** ", newSeries);
+    
+    return this.findSeriesById(seriesID)
+        .then((series) => {
+            series.title = newSeries.title;
+            // series.year = newSeries.year;
+            // series.rate = newSeries.rate;
+            // series.channel = newSeries.channel;
+            // series.seasons = newSeries.seasons;
+            return series.save();
+        });
+}
+
 module.exports = {
     findSeries,
     countSeries,
     findSeriesById,
     validateSeries,
-    addSeries
+    addSeries,
+    deleteSeriesById,
+    findSeriesByIdAndUpdate,
+    findSeriesByIdAndReplace
 }
