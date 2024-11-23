@@ -187,7 +187,7 @@ const fullUpdate = function (req, res) {
     const seriesID = req.params.seriesID;
     _replaceSeriesById(seriesID, req.body)
         .then((series) => _response(res, series))
-        .then((error) => _handleErrorResponse(res, error));
+        .catch((error) => _handleErrorResponse(res, error));
 }
 
 module.exports = {

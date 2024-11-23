@@ -44,17 +44,34 @@ const findSeriesByIdAndUpdate = function (seriesID, series) {
 }
 
 const findSeriesByIdAndReplace = function (seriesID, newSeries) {
-    console.log("NewSeries ************** ", newSeries);
-    
     return this.findSeriesById(seriesID)
         .then((series) => {
             series.title = newSeries.title;
-            // series.year = newSeries.year;
-            // series.rate = newSeries.rate;
-            // series.channel = newSeries.channel;
-            // series.seasons = newSeries.seasons;
+            series.year = newSeries.year;
+            series.rate = newSeries.rate;
+            series.channel = newSeries.channel;
+            series.genres = newSeries.genres;
+            series.seasons = newSeries.seasons;
             return series.save();
         });
+}
+
+const deleteEpisode = function (series, seasonIndex, episodeIndex) {
+    let seasons = series.seasons[seasonIndex];
+    seasons.episodes.splice(episodeIndex, 1);
+    series.seasons[seasonIndex] = seasons;
+    return series.save();
+}
+
+const updateEpisode = function (series, seasonIndex, episodeIndex, body) {
+    let season = series.seasons[seasonIndex];
+    
+    season.episodes[episodeIndex].episode_number = body.episode_number;
+    season.episodes[episodeIndex].name = body.name;
+    season.episodes[episodeIndex].overview = body.overview;
+    season.episodes[episodeIndex].image = body.image;
+    series.seasons[seasonIndex] = season;
+    return series.save();
 }
 
 module.exports = {
@@ -65,5 +82,7 @@ module.exports = {
     addSeries,
     deleteSeriesById,
     findSeriesByIdAndUpdate,
-    findSeriesByIdAndReplace
+    findSeriesByIdAndReplace,
+    deleteEpisode,
+    updateEpisode
 }
